@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacked Farm Email Signature Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stacked Farm Email Signature Generator</h1>
+            <p>Fill in your details below to generate your email signature</p>
+        </header>
+
+        <main>
+            <form id="signatureForm">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="job_title">Job Title <span class="required">*</span></label>
+                    <input type="text" id="job_title" name="job_title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Primary Phone Number</label>
+                    <input type="text" id="phone" name="phone" placeholder="Optional">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone2">Secondary Phone Number</label>
+                    <input type="text" id="phone2" name="phone2" placeholder="Optional">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password <span class="required">*</span></label>
+                    <input type="password" id="password" name="password" required>
+                    <p id="passwordError" class="error-message hidden">Incorrect password. Please try again.</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Generate Signature</button>
+                    <button type="reset" class="btn-secondary">Reset</button>
+                </div>
+            </form>
+
+            <div class="signature-preview hidden" id="signaturePreview">
+                <h2>Your Email Signature</h2>
+                <div class="preview-container">
+                    <div id="signatureDisplay"></div>
+                </div>
+                <div class="copy-instructions">
+                    <p>1. Click the "Copy to Clipboard" button below</p>
+                    <p>2. In Gmail, go to Settings → See all settings → General → Signature</p>
+                    <p>3. Create a new signature or edit an existing one</p>
+                    <p>4. Paste your new signature and save changes</p>
+                    <button id="copyButton" class="btn-primary">Copy to Clipboard</button>
+                    <p id="copyMessage" class="copy-message hidden">Signature copied to clipboard!</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Stacked Farm. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

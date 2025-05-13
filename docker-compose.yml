@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  email-signature-generator:
+    build: .
+    ports:
+      - "5032:5000"
+    environment:
+      - DEBUG=false
+    restart: unless-stopped
+    networks:
+      - signature-network
+
+networks:
+  signature-network:
+    driver: bridge

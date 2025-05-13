@@ -1,0 +1,13 @@
+{
+  "name": "stacked-signatures",
+  "version": "1.0.0",
+  "description": "Stacked Farm Email Signature Generator",
+  "main": "index.js",
+  "scripts": {
+    "build": "./build.sh",
+    "dev": "python app/main.py"
+  },
+  "author": "Stacked Farm",
+  "license": "UNLICENSED",
+  "private": true
+}

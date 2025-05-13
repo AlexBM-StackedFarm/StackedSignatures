@@ -1,0 +1,712 @@
+Delivered-To: alex@stackedfarm.com
+Received: by 2002:a05:6f02:6705:b0:87:ff74:5017 with SMTP id w5csp328634rcg;
+        Thu, 8 May 2025 22:10:28 -0700 (PDT)
+X-Received: by 2002:a05:6512:6703:b0:54f:bc43:dafb with SMTP id 2adb3069b0e04-54fc67e4553mr527261e87.43.1746767428198;
+        Thu, 08 May 2025 22:10:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1746767428; cv=none;
+        d=google.com; s=arc-20240605;
+        b=TAScd8GMYss/8yJ5movW2N60O1tG2duo2+SbO9IC1/wmY0BGkVy7LKvVRyu1ImprGb
+         9LSDI0+Snki1pmQoiOxeYbdv2UXnppErYBgAx3Wyg7brCW8Aj6JtgGPEgWZCAFe/Lx9O
+         bQYNC2eeX1fFQKwxKszgAy9avshqaaIpb5ciLImQ+M6SFEhGjyJb1pZZkImG3A5v5nIo
+         +7KYmT1Wd23ZNiBOgqDler6MTvT9Rplm+z5ND1DYb0KWc4uPw5D9bELWBRYhObEZl6Dm
+         SuEHo4F1rWq1shk1+a0gRXtfvMei/9FvpoySawfJm58focthe1s2w+uSoOzabtm0pDqx
+         zcpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=/K7ZH9zo0WHmvZtEVrWPilb7fgJFMXKvUN8msRQrJpM=;
+        fh=GMXA5Wv48qi8sYBO94hYiY/qTXVvP1R222O0Lcie4sM=;
+        b=ESX1Ql2f27ha+LCHAio/gp+8+8uVNpGpxaPBIBSdJJ5ZdrbHazbQzI+mcktDAqVB1Q
+         wprfF2F39Ux5TI8c+tpor6aFeliwv67TBVEm1K8UDC3AU31iTX/V7wWO0mRpbl4U2iMD
+         xWnEJBFe0MXDtyIiaR4GLJhNNEP+8sOdgSsjUGRKv8bOPbLf5JkUWpBYQ1LkRYW5vXK9
+         fhLu/iINitrWuIVqVPxKDQ7ilILbC+kIDMi4iU8FCixQDNA1IWJC7/GNjneWYTQxF7BR
+         Yey9P8J7oCmNe7SJQgQquRNS0Z1pNgXj4/p350JDQOUugRWN/n4ER+it3ugWI7dKg04B
+         RMow==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@stackedfarm-com.20230601.gappssmtp.com header.s=20230601 header.b=PfTO6Txe;
+       spf=none (google.com: joanne@stackedfarm.com does not designate permitted sender hosts) smtp.mailfrom=joanne@stackedfarm.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=stackedfarm.com;
+       dara=pass header.i=@stackedfarm.com
+Return-Path: <joanne@stackedfarm.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 2adb3069b0e04-54fc647beb4sor235334e87.7.2025.05.08.22.10.28
+        for <alex@stackedfarm.com>
+        (Google Transport Security);
+        Thu, 08 May 2025 22:10:28 -0700 (PDT)
+Received-SPF: none (google.com: joanne@stackedfarm.com does not designate permitted sender hosts) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@stackedfarm-com.20230601.gappssmtp.com header.s=20230601 header.b=PfTO6Txe;
+       spf=none (google.com: joanne@stackedfarm.com does not designate permitted sender hosts) smtp.mailfrom=joanne@stackedfarm.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=stackedfarm.com;
+       dara=pass header.i=@stackedfarm.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=stackedfarm-com.20230601.gappssmtp.com; s=20230601; t=1746767427; x=1747372227; darn=stackedfarm.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/K7ZH9zo0WHmvZtEVrWPilb7fgJFMXKvUN8msRQrJpM=;
+        b=PfTO6Txey6GSRhSpzJK6FAexqG9S1DG/oRtK0X6bYJ8/C/r5l0/caTtczHCexFd0UB
+         aSaBhmUOKR/AK7reiMY0qznN/Mkoc3uKLzKVkyh98K2ePlRuJ1UoW15eUKva7PT6I1Hh
+         RZz1x1KzmSYouryWoOyqH8UPqJaX4VyFg/Eg0EJQ92tQwCXhHvviwXAa3JlO+GnBhrLj
+         bE6hEV/ZQQ9fg9GwblX/3uJ6M0YqQb0muCuRaN6rSpnrTLcMSMyyS9I734kteP0vKo/u
+         DeMarN3+0UcHl85M1NkVnrVwdlwl6GuqXHD3ARIorOQcpiCUb1aQzI4Lvyifc3VGnxmI
+         tbxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746767427; x=1747372227;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/K7ZH9zo0WHmvZtEVrWPilb7fgJFMXKvUN8msRQrJpM=;
+        b=bc70mE06uwY4Uwtzq2lnAwcRW2bO8w4H+1zFb1hjQ0wSkTkdxAzgMxhymfBacrZIam
+         pbuAEBWJKk0WKMrn3NkJ5too7jvdv9qoGePI27rrJTUVP3qWG7XKwmujCSQdjdiGCeEa
+         On4vtQ+TFE7ULXhqt0AmqAs5ESXk7telkFH7lVyKfwOsXIFIxRH7yTPwxdmIU9nDouhP
+         SjIVzwiSc1KmUmEdU0Uc0oMD5y3HmQaQmhGPo44HU1uol7FuLbsDzVgrtRu763VYFvpg
+         Z5XDtr4f3sXUuIRwUS6I6r92WbiP1v63vt8YBBCeFfHV1PeehyaKi3Bi1WghnCR1ctgI
+         x6Ig==
+X-Gm-Message-State: AOJu0YyzXlBq/rZWBI21JKPjePhsSpS6L+rTFdaS31M/SATv7p7+qEpl
+	ZBBtMRkyyOFHGRzCsFVTPr+AvHBrHMXEby78QGW56CWHudZih5pJ1Ds4hgf0tUcpDr54FxDxh+J
+	ah/LF1fLhiAwrTEmQLfQ03P724cxf1HvRKInwgwSkisrzYd8ROPw=
+X-Gm-Gg: ASbGncvH+bOhXDuhyotpVHlQyYYiGlFrQvO7uac2XsPutcdKQvG8SK9PjafZf3abncc
+	OWwy2ERJhFMqeDtXLm2v8A0PBiXZXDaIV9tD3GbgpihWF020UUtAA4gTYfUwln3XuQ46NAYPFl3
+	syBujuIGRy30dtPBr/NrvOEOsWjET4+UEG
+X-Google-Smtp-Source: AGHT+IFwvQAsUiL3RwGwaHWsYc2c05t8tneqauhLTs0tFs22YVzm2IcNn8SFHdGhlklqKU/zNBUK9MxrN1AzcKImgpM=
+X-Received: by 2002:a05:651c:1b11:b0:30b:9813:affa with SMTP id
+ 38308e7fff4ca-326c45966a4mr6950621fa.24.1746767426785; Thu, 08 May 2025
+ 22:10:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <DSzQUvDlrWuHpw4y7tq15xCJVBhdfDHRRylQKELQyBQ=@guerrilla.atlassian.net>
+ <01010196b361ca15-761670eb-3a4b-40bd-b0de-2bf7153e4789-000000@us-west-2.amazonses.com>
+In-Reply-To: <01010196b361ca15-761670eb-3a4b-40bd-b0de-2bf7153e4789-000000@us-west-2.amazonses.com>
+From: Joanne Vayro <joanne@stackedfarm.com>
+Date: Fri, 9 May 2025 15:09:48 +1000
+X-Gm-Features: ATxdqUEavhPpBaGEQu64M4wYeYZL6hxRwdrZhLweVsYU782FI8DzkvXYYalB9FM
+Message-ID: <CAG=zEWYFSVfAiYYxRXXXh+X_c-aKNzvU5JgJhMpoS7=UD=X8Ag@mail.gmail.com>
+Subject: Fwd: [JIRA] Hayley Dobson mentioned you on SFSB-8
+To: Alex Bolton-Mijares <alex@stackedfarm.com>
+Content-Type: multipart/related; boundary="000000000000fabfe90634acfbc0"
+
+--000000000000fabfe90634acfbc0
+Content-Type: multipart/alternative; boundary="000000000000fabfe80634acfbbf"
+
+--000000000000fabfe80634acfbbf
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Would appreciate your weigh-in here.
+
+Thanks,
+
+
+
+[image: Stacked Farm]
+
+Joanne Vayro
+
+Marketing Coordinator
+
+Offices: Australia <https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7>  |  USA
+<https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+9021=
+2,+USA/@34.0642184,-118.3993565,1627m/data=3D!3m2!1e3!4b1!4m6!3m5!1s0x80c2b=
+bfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11=
+k3r4mq1s!5m1!1e3?entry=3Dttu&g_ep=3DEgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D>
+stackedfarm.com LinkedIn <https://www.linkedin.com/company/stackedfarm/>
+Instagram <https://www.instagram.com/stackedfarm/>
+
+
+
+
+---------- Forwarded message ---------
+From: Hayley Dobson (Jira) <jira@guerrilla.atlassian.net>
+Date: Fri, 9 May 2025 at 14:50
+Subject: [JIRA] Hayley Dobson mentioned you on SFSB-8
+To: \"Joanne Vayro\" <joanne@stackedfarm.com>
+
+
+Hayley Dobson *mentioned you* on a work item
+Guerrilla =E2=80=94 Stacked Farm Shared Board/SFSB-8 Retainer =E2=80=94 Ema=
+il signature
+ =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
+=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
+=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C
+Hayley Dobson *mentioned you* on a work item
+Guerrilla =E2=80=94 Stacked Farm Shared Board
+<https://guerrilla.atlassian.net/browse/SFSB?atlOrigin=3DeyJpIjoiMDY0NTcwYz=
+M2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&linkSource=3Demail>
+  /
+SFSB-8
+<https://guerrilla.atlassian.net/browse/SFSB-8?atlOrigin=3DeyJpIjoiMDY0NTcw=
+YzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&linkSource=3Demail>
+Retainer =E2=80=94 Email signature
+<https://guerrilla.atlassian.net/browse/SFSB-8?atlOrigin=3DeyJpIjoiMDY0NTcw=
+YzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&linkSource=3Demail>
+Hayley Dobson 2:50 PM AEST
+
+Hey @Joanne Vayro, thanks for patience here. The team have reviewed and
+yes, as the message states, all available seats have been used and
+therefore no new users can access the Stacked Farm vcard site. The good
+news is there are a few options to allow additional users, in order of
+preference =F0=9F=99=82
+
+   1.
+
+   Recommended approach =E2=80=94 Whitelist IP address - do you have have a=
+ static
+   office IP address that can be whitelisted? This will bypass the login an=
+d
+   will not require a seat and will be the most steamline way to resolve th=
+is.
+   2.
+
+   Remove duplicate/unused email address/seats =E2=80=94 are any of the ema=
+il
+   addresses attached no longer in use or are duplicates and can be revoked=
+?
+   This will free up seats for new users.
+   3.
+
+   Remove authentication =E2=80=94 this is the least desirable option, but =
+it will
+   be used as a last resort if either of the above options aren=E2=80=99t f=
+easible.
+   Noting that the vcard site won=E2=80=99t be indexed by Google.
+
+Let m know what you think and we can get this actioned for you. Thanks!
+
+
+View work item
+<https://guerrilla.atlassian.net/browse/SFSB-8?atlOrigin=3DeyJpIjoiMDY0NTcw=
+YzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&linkSource=3Demail>
+
+Open the work item to view attachments over 100KB.
+Get Jira notifications on your phone! Download the Jira Cloud app for
+Android
+<https://play.google.com/store/apps/details?id=3Dcom.atlassian.android.jira=
+.core&referrer=3Dutm_source%3DNotificationLink%26utm_medium%3DEmail>
+or iOS
+<https://itunes.apple.com/app/apple-store/id1006972087?pt=3D696495&ct=3DEma=
+ilNotificationLink&mt=3D8>
+.
+
+
+Manage notifications
+<https://guerrilla.atlassian.net/jira/settings/personal/notifications?email=
+Preferences=3Dtrue&atlOrigin=3DeyJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5Y2Nh=
+NWNkYTUiLCJwIjoiaiJ9&linkSource=3Demail#emailpreferences>
+ =E2=80=A2
+Give feedback <https://surveys.atlassian.com/jfe/form/SV_9X3zi1X4q1gKsqF>  =
+=E2=80=A2
+Privacy policy <https://www.atlassian.com/legal/privacy-policy>
+
+--000000000000fabfe80634acfbbf
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Would appreciate your weigh-in here.=C2=A0</div><div>=
+<br>Thanks,</div><div><br></div><div><br></div><div><br></div><div><div dir=
+=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
+dir=3D"ltr"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=
+=3D"border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-fa=
+mily:BlinkMacSystemFont,-apple-system,&quot;Segoe UI&quot;,Roboto,Oxygen,Ub=
+untu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica=
+ Neue&quot;,Helvetica,Arial,sans-serif;font-size:16px;background:none;borde=
+r:0px;margin:0px;padding:0px;width:410px;max-width:410px"><tbody><tr><td co=
+lspan=3D"1" style=3D"padding:0px;vertical-align:top;width:109px;max-width:1=
+09px"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"bord=
+er-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0=
+px;padding:0px;width:109px;max-width:109px"><tbody><tr><td style=3D"padding=
+:0px;vertical-align:top"><img height=3D"105" width=3D"109" src=3D"https://i=
+mages.prismic.io/stacked-farm/Z_huGOvxEdbNO4lm_email-signature_v3.gif?auto=
+=3Dformat,compress" alt=3D"Stacked Farm" style=3D"max-width:109px;height:au=
+to;width:109px;max-height:105px"></td></tr></tbody></table></td><td style=
+=3D"padding:0px 0px 0px 24px;vertical-align:top"><table cellpadding=3D"0" c=
+ellspacing=3D"0" border=3D"0" style=3D"border-collapse:collapse;border-spac=
+ing:0px;background:none;border:0px;margin:0px;padding:0px;width:274px;max-w=
+idth:274px"><tbody><tr><td colspan=3D"2" style=3D"padding:0px 0px 13px;vert=
+ical-align:top"><p style=3D"padding:0px;color:rgb(0,0,0);line-height:18px;l=
+etter-spacing:0.648px;margin:0px!important">Joanne Vayro</p><p style=3D"pad=
+ding:0px;color:rgb(0,0,0);font-size:14px;line-height:14px;letter-spacing:0.=
+573px;margin:0px!important">Marketing Coordinator</p></td></tr><tr><td vali=
+gn=3D"top" style=3D"padding:0px 0px 7px;vertical-align:top"><p style=3D"pad=
+ding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:1=
+2px;letter-spacing:0.2px;margin:0px!important">Offices:=C2=A0<a href=3D"htt=
+ps://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style=3D"color:rgb(0,0,0)" target=
+=3D"_blank">Australia</a>=C2=A0=C2=A0|=C2=A0=C2=A0<a href=3D"https://www.go=
+ogle.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642=
+184,-118.3993565,1627m/data=3D!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x6=
+1e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e=
+3?entry=3Dttu&amp;g_ep=3DEgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style=3D"col=
+or:rgb(0,0,0)" target=3D"_blank">USA</a></p></td></tr><tr><td valign=3D"top=
+" style=3D"padding:0px 0px 12px;vertical-align:top"><table cellpadding=3D"0=
+" cellspacing=3D"0" border=3D"0" style=3D"color:rgb(0,0,0);font-size:8px;ba=
+ckground:none;border-collapse:collapse;border-spacing:0px;border:0px;margin=
+:0px;padding:0px;width:274px;max-width:288px"><tbody><tr><td style=3D"paddi=
+ng:0px 20px 0px 0px;vertical-align:top;width:101px"><a href=3D"https://stac=
+kedfarm.com/" style=3D"color:rgb(77,77,77);font-size:10px;letter-spacing:0.=
+2px" target=3D"_blank">stackedfarm.com</a></td><td style=3D"padding:0px 20p=
+x 0px 0px;vertical-align:top;width:63px"><a href=3D"https://www.linkedin.co=
+m/company/stackedfarm/" style=3D"color:rgb(77,77,77);font-size:10px;letter-=
+spacing:0.2px" target=3D"_blank">LinkedIn</a></td><td style=3D"padding:0px;=
+vertical-align:top"><a href=3D"https://www.instagram.com/stackedfarm/" styl=
+e=3D"color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px" target=3D"_bl=
+ank">Instagram</a></td></tr></tbody></table></td></tr><tr><td valign=3D"top=
+" style=3D"padding:0px;vertical-align:top;line-height:16px;color:rgb(0,0,0)=
+;font-size:8px"><br><br></td></tr></tbody></table></td></tr></tbody></table=
+></div></div></div><br><br><div class=3D"gmail_quote gmail_quote_container"=
+><div dir=3D"ltr" class=3D"gmail_attr">---------- Forwarded message -------=
+--<br>From: <strong class=3D"gmail_sendername" dir=3D"auto">Hayley Dobson (=
+Jira)</strong> <span dir=3D"auto">&lt;<a href=3D"mailto:jira@guerrilla.atla=
+ssian.net">jira@guerrilla.atlassian.net</a>&gt;</span><br>Date: Fri, 9 May =
+2025 at 14:50<br>Subject: [JIRA] Hayley Dobson mentioned you on SFSB-8<br>T=
+o: \&quot;Joanne Vayro\&quot; &lt;<a href=3D"mailto:joanne@stackedfarm.com"=
+>joanne@stackedfarm.com</a>&gt;<br></div><br><br><div class=3D"msg-85805486=
+64683702866"><u></u>
+
+=20
+ =20
+ =20
+ =20
+  =20
+ =20
+=20
+ <div style=3D"background-color:#ffffff;font-family:-apple-system,BlinkMacS=
+ystemFont,&#39;Segoe UI&#39;,&#39;Roboto&#39;,&#39;Oxygen&#39;,&#39;Ubuntu&=
+#39;,&#39;Fira Sans&#39;,&#39;Droid Sans&#39;,&#39;Helvetica Neue&#39;,sans=
+-serif;font-size:14px;font-style:normal;font-weight:400;color:#172b4d;lette=
+r-spacing:-0.15px;color:#333333;font-family:Arial,sans-serif;font-size:14px=
+;line-height:1.4285715;background-color:#ffffff;font-family:-apple-system,B=
+linkMacSystemFont,&#39;Segoe UI&#39;,&#39;Roboto&#39;,&#39;Oxygen&#39;,&#39=
+;Ubuntu&#39;,&#39;Fira Sans&#39;,&#39;Droid Sans&#39;,&#39;Helvetica Neue&#=
+39;,sans-serif;color:#172b4d;letter-spacing:-0.15px" bgcolor=3D"#ffffff">
+  <div style=3D"display:none">
+   <div>
+    <span>Hayley Dobson <b>mentioned you</b> on a work item</span>
+   </div><span>Guerrilla =E2=80=94 Stacked Farm Shared Board/SFSB-8</span> =
+<span>Retainer =E2=80=94 Email signature</span> <span>=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C</span>
+  </div>
+  <div style=3D"width:100.0%;table-layout:fixed;max-width:1040px;margin:0 a=
+uto">
+  =20
+   <table style=3D"border-spacing:0;margin:0;border-collapse:collapse;width=
+:100.0%;border-spacing:0;margin:0">
+    <tbody style=3D"border-bottom:0">
+     <tr>
+      <td style=3D"padding:0;padding:0">
+       <div style=3D"font-size:14px;margin-bottom:7px">
+        <span>Hayley Dobson <b style=3D"font-weight:600">mentioned you</b> =
+on a work item</span>
+       </div>
+       <table style=3D"border-spacing:0;margin:0;border-collapse:collapse;w=
+idth:100.0%;border-spacing:0;margin:0;max-width:1040px;margin:0;border-coll=
+apse:separate">
+        <tbody style=3D"border-bottom:0">
+         <tr>
+          <td style=3D"padding:0;padding:0;padding-top:12px;padding-bottom:=
+12px;border-top:2px solid #dfe1e6">
+           <table style=3D"border-spacing:0;margin:0;border-collapse:collap=
+se;width:100.0%;border-spacing:0;margin:0;margin:0 0 0 0">
+            <thead style=3D"border-bottom:0">
+             <tr>
+              <td colspan=3D"3" style=3D"padding:0;padding:0">
+               <div>
+                <div style=3D"color:#6b778c;font-weight:500;font-size:14px;=
+line-height:20px;margin-bottom:6px">
+                 <table style=3D"border-spacing:0;margin:0;border-collapse:=
+collapse;width:100.0%;border-spacing:0;margin:0;width:auto;border-spacing:0=
+;height:20px" height=3D"20">
+                  <tbody style=3D"border-bottom:0">
+                   <tr>
+                    <td style=3D"padding:0;padding:0;white-space:nowrap;col=
+or:#6b778c">
+                     <table style=3D"border-spacing:0;margin:0;border-colla=
+pse:collapse;width:100.0%;border-spacing:0;margin:0">
+                      <tbody style=3D"border-bottom:0">
+                       <tr>
+                        <td style=3D"padding:0;padding:0;white-space:nowrap=
+;color:#6b778c"><a class=3D"m_-8580548664683702866ak-button__appearance-sub=
+tle-link" href=3D"https://guerrilla.atlassian.net/browse/SFSB?atlOrigin=3De=
+yJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&amp;linkSou=
+rce=3Demail" style=3D"color:#0052cc;text-decoration:none;box-sizing:border-=
+box;border-radius:3px;border-width:0;display:inline-flex;font-style:normal;=
+font-size:inherit;height:2.2857144em;line-height:2.2857144em;margin:0;outli=
+ne:none;padding:0 12px;text-align:center;vertical-align:middle;white-space:=
+nowrap;background:none;color:#42526e;text-decoration:none;padding:0px;color=
+:#6b778c;height:auto;line-height:normal" target=3D"_blank">Guerrilla =E2=80=
+=94 Stacked Farm Shared Board</a></td>
+                       </tr>
+                      </tbody>
+                     </table></td>
+                    <td style=3D"padding:0;padding:0;white-space:nowrap;col=
+or:#6b778c"><span style=3D"color:#6b778c">=C2=A0=C2=A0/=C2=A0=C2=A0</span><=
+/td>
+                    <td style=3D"padding:0;padding:0;white-space:nowrap;col=
+or:#6b778c">
+                     <table style=3D"border-spacing:0;margin:0;border-colla=
+pse:collapse;width:100.0%;border-spacing:0;margin:0">
+                      <tbody style=3D"border-bottom:0">
+                       <tr>
+                        <td style=3D"padding:0;padding:0;white-space:nowrap=
+;color:#6b778c"><a class=3D"m_-8580548664683702866ak-button__appearance-sub=
+tle-link" href=3D"https://guerrilla.atlassian.net/browse/SFSB-8?atlOrigin=
+=3DeyJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&amp;lin=
+kSource=3Demail" style=3D"color:#0052cc;text-decoration:none;box-sizing:bor=
+der-box;border-radius:3px;border-width:0;display:inline-flex;font-style:nor=
+mal;font-size:inherit;height:2.2857144em;line-height:2.2857144em;margin:0;o=
+utline:none;padding:0 12px;text-align:center;vertical-align:middle;white-sp=
+ace:nowrap;background:none;color:#42526e;text-decoration:none;padding:0px;c=
+olor:#6b778c;height:auto;line-height:normal" target=3D"_blank">SFSB-8</a></=
+td>
+                       </tr>
+                      </tbody>
+                     </table></td>
+                   </tr>
+                  </tbody>
+                 </table>
+                </div>
+               </div>
+               <div class=3D"m_-8580548664683702866layout-simple-header-wit=
+h-breadcrumbs" style=3D"font-size:20px;font-weight:normal;line-height:24px;=
+margin:6px 0 0 0">
+                <a href=3D"https://guerrilla.atlassian.net/browse/SFSB-8?at=
+lOrigin=3DeyJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTUiLCJwIjoiaiJ9&=
+amp;linkSource=3Demail" style=3D"color:#0052cc;text-decoration:none;color:#=
+0052cc" target=3D"_blank"> <span>Retainer =E2=80=94 Email signature</span> =
+</a>
+               </div></td>
+             </tr>
+            </thead>
+            <tbody style=3D"border-bottom:0">
+             <tr>
+              <td rowspan=3D"2" style=3D"padding:0;padding:0;padding-top:14=
+px;vertical-align:top;width:40px" width=3D"40"><img src=3D"https://secure.g=
+ravatar.com/avatar/0e1a7ef211fc1db798bc5611f00589a2?d=3Dhttps%3A%2F%2Favata=
+r-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FHD-1.=
+png" style=3D"border:0;border:0;border-radius:50.0%;width:32px;height:32px"=
+ width=3D"32" height=3D"32"></td>
+              <td colspan=3D"2" style=3D"padding:0;padding:0;padding-top:14=
+px;padding-bottom:6px;line-height:20px;vertical-align:middle"><span style=
+=3D"color:#42526e;font-weight:500;display:inline-block;vertical-align:middl=
+e">Hayley Dobson</span> <span style=3D"color:#42526e;display:inline-block;v=
+ertical-align:middle"> 2:50=C2=A0PM=C2=A0AEST</span></td>
+             </tr>
+             <tr>
+              <td colspan=3D"2" style=3D"padding:0;padding:0;line-height:24=
+px">
+               <div>
+                <div style=3D"font-family:-apple-system,BlinkMacSystemFont,=
+&#39;Segoe UI&#39;,&#39;Roboto&#39;,&#39;Oxygen&#39;,&#39;Ubuntu&#39;,&#39;=
+Fira Sans&#39;,&#39;Droid Sans&#39;,&#39;Helvetica Neue&#39;,sans-serif;fon=
+t-size:14px;font-weight:400;line-height:24px;vertical-align:baseline">
+                 <p style=3D"margin:10px 0 0;margin-top:0;margin:0;padding:=
+0px;margin-bottom:7px;padding-top:7px;line-height:24px;font-size:14px">Hey =
+<span style=3D"background:#efeff2;border:1px solid transparent;border-radiu=
+s:20px;color:#42526e;padding:0 4px 2px 3px;white-space:nowrap">@Joanne Vayr=
+o</span>, thanks for patience here. The team have reviewed and yes, as the =
+message states, all available seats have been used and therefore no new use=
+rs can access the Stacked Farm vcard site. The good news is there are a few=
+ options to allow additional users, in order of preference =F0=9F=99=82</p>
+                 <ol start=3D"1" style=3D"margin-top:12px;margin-bottom:12p=
+x">
+                  <li style=3D"margin-top:4px">
+                   <p style=3D"margin:10px 0 0;margin-top:0;margin:0;paddin=
+g:0px;margin-bottom:7px;padding-top:7px;line-height:24px;font-size:14px;mar=
+gin-bottom:0px;padding-top:0px"><span style=3D"font-weight:bold">Recommende=
+d approach </span>=E2=80=94=C2=A0Whitelist IP address - do you have have a =
+static office IP address that can be whitelisted? This will bypass the logi=
+n and will not require a seat and will be the most steamline way to resolve=
+ this.</p></li>
+                  <li style=3D"margin-top:4px">
+                   <p style=3D"margin:10px 0 0;margin-top:0;margin:0;paddin=
+g:0px;margin-bottom:7px;padding-top:7px;line-height:24px;font-size:14px;mar=
+gin-bottom:0px;padding-top:0px">Remove duplicate/unused email address/seats=
+ =E2=80=94 are any of the email addresses attached no longer in use or are =
+duplicates and can be revoked? This will free up seats for new users.</p></=
+li>
+                  <li style=3D"margin-top:4px">
+                   <p style=3D"margin:10px 0 0;margin-top:0;margin:0;paddin=
+g:0px;margin-bottom:7px;padding-top:7px;line-height:24px;font-size:14px;mar=
+gin-bottom:0px;padding-top:0px">Remove authentication =E2=80=94 this is the=
+ least desirable option, but it will be used as a last resort if either of =
+the above options aren=E2=80=99t feasible. Noting that the vcard site won=
+=E2=80=99t be indexed by Google.</p></li>
+                 </ol>
+                 <p style=3D"margin:10px 0 0;margin:0;padding:0px;margin-bo=
+ttom:7px;padding-top:7px;line-height:24px;font-size:14px">Let m know what y=
+ou think and we can get this actioned for you. Thanks!</p>
+                </div>
+               </div></td>
+             </tr>
+            </tbody>
+            <tbody style=3D"border-bottom:0">
+             <tr>
+              <td colspan=3D"3" height=3D"12px" style=3D"padding:0;padding:=
+0">=C2=A0</td>
+             </tr>
+             <tr>
+              <td colspan=3D"3" style=3D"padding:0;padding:0">
+               <div style=3D"margin:0 0 6px 0">
+                <table style=3D"border-spacing:0;margin:0;border-collapse:c=
+ollapse;width:100.0%;border-spacing:0;margin:0">
+                 <tbody style=3D"border-bottom:0">
+                  <tr>
+                   <td style=3D"padding:0;padding:0"> <a class=3D"m_-858054=
+8664683702866ak-button__appearance-primary" href=3D"https://guerrilla.atlas=
+sian.net/browse/SFSB-8?atlOrigin=3DeyJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5=
+Y2NhNWNkYTUiLCJwIjoiaiJ9&amp;linkSource=3Demail" style=3D"color:#0052cc;tex=
+t-decoration:none;box-sizing:border-box;border-radius:3px;border-width:0;di=
+splay:inline-flex;font-style:normal;font-size:inherit;height:2.2857144em;li=
+ne-height:2.2857144em;margin:0;outline:none;padding:0 12px;text-align:cente=
+r;vertical-align:middle;white-space:nowrap;background:#0052cc;color:#ffffff=
+;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,&#39;Seg=
+oe UI&#39;,&#39;Roboto&#39;,&#39;Oxygen&#39;,&#39;Ubuntu&#39;,&#39;Fira San=
+s&#39;,&#39;Droid Sans&#39;,&#39;Helvetica Neue&#39;,sans-serif;font-size:1=
+4px;padding:0 38px" target=3D"_blank">View work item</a> </td>
+                  </tr>
+                 </tbody>
+                </table>
+               </div></td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+         <tr>
+          <td style=3D"padding:0;padding:0;padding-bottom:12px;border-botto=
+m:2px solid #dfe1e6">
+           <div>
+           </div></td>
+         </tr>
+         <tr>
+          <td style=3D"padding:0;padding:0;padding-top:12px">
+           <table class=3D"m_-8580548664683702866footer" width=3D"100%" cel=
+lpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-spacing:0;mar=
+gin:0;border-collapse:collapse;width:100.0%;border-spacing:0;margin:0">
+            <tbody style=3D"border-bottom:0">
+             <tr>
+              <td style=3D"padding:0;padding:0"><br><small style=3D"color:#=
+707070;font-size:12px;line-height:1.3333334;color:#707070;font-size:12px;fo=
+nt-weight:normal;line-height:17px">Open the work item to view attachments o=
+ver 100KB.</small>
+               <table style=3D"border-spacing:0;margin:0;border-collapse:co=
+llapse;width:100.0%;border-spacing:0;margin:0">
+                <tbody style=3D"border-bottom:0">
+                 <tr>
+                  <td style=3D"padding:0;padding:0"><small style=3D"color:#=
+707070;font-size:12px;line-height:1.3333334;color:#707070;font-size:12px;fo=
+nt-weight:normal;line-height:17px">Get Jira notifications on your phone! Do=
+wnload the Jira Cloud app for <a href=3D"https://play.google.com/store/apps=
+/details?id=3Dcom.atlassian.android.jira.core&amp;referrer=3Dutm_source%3DN=
+otificationLink%26utm_medium%3DEmail" style=3D"color:#0052cc;text-decoratio=
+n:none" target=3D"_blank">Android</a> or <a href=3D"https://itunes.apple.co=
+m/app/apple-store/id1006972087?pt=3D696495&amp;ct=3DEmailNotificationLink&a=
+mp;mt=3D8" style=3D"color:#0052cc;text-decoration:none" target=3D"_blank">i=
+OS</a>.</small></td>
+                 </tr>
+                 <tr>
+                  <td style=3D"padding:0;padding:0">
+                   <div style=3D"line-height:4px;height:4px;font-size:1px" =
+height=3D"4">
+                    =C2=A0
+                   </div></td>
+                 </tr>
+                 <tr>
+                  <td style=3D"padding:0;padding:0;line-height:15px"><small=
+ style=3D"color:#707070;font-size:12px;line-height:1.3333334;color:#707070;=
+font-size:12px;font-weight:normal;line-height:17px"> <a href=3D"https://gue=
+rrilla.atlassian.net/jira/settings/personal/notifications?emailPreferences=
+=3Dtrue&amp;atlOrigin=3DeyJpIjoiMDY0NTcwYzM2ZjQzNGQ2NmE1Yjk0YWM5Y2NhNWNkYTU=
+iLCJwIjoiaiJ9&amp;linkSource=3Demail#emailpreferences" style=3D"color:#0052=
+cc;text-decoration:none" target=3D"_blank">Manage notifications</a> </small=
+> <small style=3D"color:#707070;font-size:12px;line-height:1.3333334;color:=
+#707070;font-size:12px;font-weight:normal;line-height:17px"> =C2=A0=E2=80=
+=A2=C2=A0 </small> <small style=3D"color:#707070;font-size:12px;line-height=
+:1.3333334;color:#707070;font-size:12px;font-weight:normal;line-height:17px=
+"> <a href=3D"https://surveys.atlassian.com/jfe/form/SV_9X3zi1X4q1gKsqF" st=
+yle=3D"color:#0052cc;text-decoration:none" target=3D"_blank">Give feedback<=
+/a> </small> <small style=3D"color:#707070;font-size:12px;line-height:1.333=
+3334;color:#707070;font-size:12px;font-weight:normal;line-height:17px"> =C2=
+=A0=E2=80=A2=C2=A0 </small> <small style=3D"color:#707070;font-size:12px;li=
+ne-height:1.3333334;color:#707070;font-size:12px;font-weight:normal;line-he=
+ight:17px"> <a href=3D"https://www.atlassian.com/legal/privacy-policy" styl=
+e=3D"color:#0052cc;text-decoration:none" target=3D"_blank">Privacy policy</=
+a> </small></td>
+                 </tr>
+                </tbody>
+               </table></td>
+              <td width=3D"20" class=3D"m_-8580548664683702866desktop-only"=
+ style=3D"padding:0;padding:0;display:block">=C2=A0</td>
+              <td style=3D"padding:0;padding:0;text-align:right">
+               <div class=3D"m_-8580548664683702866desktop-only" style=3D"d=
+isplay:block">
+                <img src=3D"cid:ii_196b37296b5db66878a1" style=3D"border:0;=
+border:0;height:32px" height=3D"32">
+               </div></td>
+             </tr>
+             <tr>
+              <td style=3D"padding:0;padding:0">
+               <div class=3D"m_-8580548664683702866mobile-only" style=3D"di=
+splay:none;line-height:8px;height:8px" height=3D"8">
+                =C2=A0
+               </div></td>
+             </tr>
+             <tr>
+              <td style=3D"padding:0;padding:0">
+               <div class=3D"m_-8580548664683702866mobile-only" style=3D"di=
+splay:none">
+                <img src=3D"cid:ii_196b37296b5db66878a1" style=3D"border:0;=
+border:0;height:32px" height=3D"32">
+               </div></td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+ <img alt=3D"" src=3D"http://atlassian-trk.prd.msg.ss-inf.net/CI0/01010196b=
+361ca15-761670eb-3a4b-40bd-b0de-2bf7153e4789-000000/emB3Q5gHCh70qKjl6RuXHqD=
+CyJl-44iPlBmcdxjYmVI=3D404" style=3D"display:none;width:1px;height:1px">
+</div>
+</div></div></div>
+
+--000000000000fabfe80634acfbbf--
+--000000000000fabfe90634acfbc0
+Content-Type: image/png; 
+	name="atl-generated-2f8ec6b8-37a2-4f15-96fd-6c893f56d8b9.png"
+Content-Disposition: inline; 
+	filename="atl-generated-2f8ec6b8-37a2-4f15-96fd-6c893f56d8b9.png"
+Content-Transfer-Encoding: base64
+Content-ID: <ii_196b37296b5db66878a1>
+X-Attachment-Id: ii_196b37296b5db66878a1
+
+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
+RU5ErkJggg==
+--000000000000fabfe90634acfbc0--
