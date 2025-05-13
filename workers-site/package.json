@@ -5,8 +5,5 @@
   "description": "A Cloudflare worker for the Stacked Farm Email Signature Generator",
   "main": "index.js",
   "author": "Stacked Farm",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.3.0"
-  }
+  "license": "UNLICENSED"
 }

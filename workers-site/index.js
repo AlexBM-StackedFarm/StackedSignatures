@@ -1,12 +1,3 @@
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
-
-/**
- * The DEBUG flag will do two things that help during development:
- * 1. we will skip caching on the edge, which makes it easier to debug
- * 2. we will return more detailed error messages to the client
- */
-const DEBUG = false
-
 /**
  * Handle incoming requests
  */
@@ -21,26 +12,21 @@ async function handleRequest(event) {
       return handleGenerateRequest(event.request)
     }
 
-    // Serve static assets for any other route
-    let options = {}
-    if (DEBUG) {
-      options.cacheControl = {
-        bypassCache: true,
-      }
-    }
-
+    // Basic static file handling - simplified version that doesn't require KV
     try {
-      // Try to get the asset from KV
-      const page = await getAssetFromKV(event, options)
-      const response = new Response(page.body, page)
-      response.headers.set('X-XSS-Protection', '1; mode=block')
-      response.headers.set('X-Content-Type-Options', 'nosniff')
-      response.headers.set('X-Frame-Options', 'DENY')
-      response.headers.set('Referrer-Policy', 'unsafe-url')
-      response.headers.set('Feature-Policy', 'none')
-      return response
+      // For a simple fallback, we'll serve the signature form directly
+      return new Response(generateHtmlPage(), {
+        status: 200,
+        headers: {
+          "Content-Type": "text/html",
+          "X-XSS-Protection": "1; mode=block",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "DENY",
+          "Cache-Control": "public, max-age=3600"
+        }
+      })
     } catch (e) {
-      // If asset isn't found in KV, return a simple fallback
+      // If asset isn't found, return a simple fallback
       return new Response("Stacked Farm Email Signature Generator", {
         status: 200,
         headers: { "Content-Type": "text/html" }
@@ -48,7 +34,7 @@ async function handleRequest(event) {
     }
   } catch (e) {
     // Return a standard error response
-    return new Response("An error occurred: " + (DEBUG ? e.message : "Unknown error"), {
+    return new Response("An error occurred: " + e.message, {
       status: 500,
     })
   }
@@ -94,6 +80,334 @@ async function handleGenerateRequest(request) {
       }
     }
   )
+}
+
+function generateHtmlPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacked Farm Email Signature Generator</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #333;
+      --background-color: #f8f8f8;
+      --border-color: #ddd;
+      --text-color: #333;
+      --success-color: #4CAF50;
+      --error-color: #f44336;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    header h1 {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .required {
+      color: var(--error-color);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #43a047;
+    }
+
+    .btn-secondary {
+      background-color: #f5f5f5;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #e8e8e8;
+    }
+
+    .signature-preview {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .preview-container {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: white;
+    }
+
+    .copy-instructions {
+      background-color: #f5f5f5;
+      padding: 1.5rem;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .copy-instructions p {
+      margin-bottom: 0.5rem;
+    }
+
+    .copy-instructions button {
+      margin-top: 1rem;
+    }
+
+    .copy-message {
+      margin-top: 0.5rem;
+      color: var(--success-color);
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: #666;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Stacked Farm Email Signature Generator</h1>
+      <p>Fill in your details below to generate your email signature</p>
+    </header>
+
+    <main>
+      <form id="signatureForm">
+        <div class="form-group">
+          <label for="name">Full Name <span class="required">*</span></label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="job_title">Job Title <span class="required">*</span></label>
+          <input type="text" id="job_title" name="job_title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Primary Phone Number</label>
+          <input type="text" id="phone" name="phone" placeholder="Optional">
+        </div>
+
+        <div class="form-group">
+          <label for="phone2">Secondary Phone Number</label>
+          <input type="text" id="phone2" name="phone2" placeholder="Optional">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password <span class="required">*</span></label>
+          <input type="password" id="password" name="password" required>
+          <p id="passwordError" class="error-message hidden">Incorrect password. Please try again.</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Generate Signature</button>
+          <button type="reset" class="btn-secondary">Reset</button>
+        </div>
+      </form>
+
+      <div class="signature-preview hidden" id="signaturePreview">
+        <h2>Your Email Signature</h2>
+        <div class="preview-container">
+          <div id="signatureDisplay"></div>
+        </div>
+        <div class="copy-instructions">
+          <p>1. Click the "Copy to Clipboard" button below</p>
+          <p>2. In Gmail, go to Settings → See all settings → General → Signature</p>
+          <p>3. Create a new signature or edit an existing one</p>
+          <p>4. Paste your new signature and save changes</p>
+          <button id="copyButton" class="btn-primary">Copy to Clipboard</button>
+          <p id="copyMessage" class="copy-message hidden">Signature copied to clipboard!</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Stacked Farm. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const signatureForm = document.getElementById('signatureForm');
+      const signaturePreview = document.getElementById('signaturePreview');
+      const signatureDisplay = document.getElementById('signatureDisplay');
+      const copyButton = document.getElementById('copyButton');
+      const copyMessage = document.getElementById('copyMessage');
+      const passwordError = document.getElementById('passwordError');
+
+      signatureForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Hide any previous error messages
+        passwordError.classList.add('hidden');
+
+        const formData = new FormData(signatureForm);
+
+        fetch('/generate', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.error || 'Server error');
+            });
+          }
+          return response.json();
+        })
+        .then(data => {
+          signatureDisplay.innerHTML = data.signature_html;
+          signaturePreview.classList.remove('hidden');
+          window.scrollTo({
+            top: signaturePreview.offsetTop,
+            behavior: 'smooth'
+          });
+        })
+        .catch(error => {
+          console.error('Error generating signature:', error);
+          if (error.message.includes('Incorrect password')) {
+            passwordError.classList.remove('hidden');
+          } else {
+            alert('An error occurred while generating your signature. Please try again.');
+          }
+        });
+      });
+
+      copyButton.addEventListener('click', function() {
+        // Create a range and select the signature content
+        const range = document.createRange();
+        range.selectNode(signatureDisplay);
+
+        // Clear any current selection
+        window.getSelection().removeAllRanges();
+
+        // Select the signature
+        window.getSelection().addRange(range);
+
+        // Execute copy command
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            copyMessage.classList.remove('hidden');
+            setTimeout(() => {
+              copyMessage.classList.add('hidden');
+            }, 3000);
+          } else {
+            alert('Failed to copy signature. Please try selecting and copying manually.');
+          }
+        } catch (err) {
+          console.error('Error copying text:', err);
+          alert('Failed to copy signature. Please try selecting and copying manually.');
+        }
+
+        // Clear the selection
+        window.getSelection().removeAllRanges();
+      });
+    });
+  </script>
+</body>
+</html>`;
 }
 
 function generateSignatureHtml(name, job_title, phone, phone2) {
