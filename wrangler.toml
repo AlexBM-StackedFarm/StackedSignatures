@@ -1,0 +1,12 @@
+[site]
+bucket = "./dist"
+
+[[routes]]
+pattern = "/functions/*"
+script = "./functions/index.js"
+
+[build]
+command = "./build.sh"
+
+[build.upload]
+format = "service-worker"
