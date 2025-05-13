@@ -132,13 +132,13 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                                     <tbody>
                                         <tr>
                                             <td style="padding:0px 20px 0px 0px;vertical-align:top;width:101px">
-                                                <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                             <td style="padding:0px 20px 0px 0px;vertical-align:top;width:63px">
-                                                <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                             <td style="padding:0px;vertical-align:top">
-                                                <a href="https://www.instagram.com/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px" target="_blank">Instagram</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="https://www.instagram.com/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">Instagram</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                         </tr>
                                     </tbody>
