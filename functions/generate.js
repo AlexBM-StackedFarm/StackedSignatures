@@ -80,9 +80,9 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                         </tr>
                         ${phoneHtml}
                         <tr>
-                            <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
-                                <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
-                                    Links: <a href="https://stackedfarm.com/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">LinkedIn</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.instagram.com/stackedfarm/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">Instagram</a>
+                            <td valign="top" style="padding:2px 0px 7px;vertical-align:top">
+                                <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:14px;font-size:12px;letter-spacing:0.2px;margin:0px!important">
+                                    <a href="https://stackedfarm.com/" style="color:rgb(0,0,0);font-size:10pt;line-height:14px;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(0,0,0);font-size:10pt;line-height:14px;" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/stackedfarm/" style="color:rgb(0,0,0);font-size:10pt;line-height:14px;" target="_blank">Instagram</a>
                                 </p>
                             </td>
                         </tr>
