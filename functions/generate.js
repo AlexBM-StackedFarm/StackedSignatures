@@ -80,22 +80,10 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                         </tr>
                         ${phoneHtml}
                         <tr>
-                            <td valign="top" style="padding:0px 0px 18px;vertical-align:top">
-                                <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
-                                    <tbody>
-                                        <tr>
-                                            <td style="padding:0px 20px 0px 0px;vertical-align:top;width:101px">
-                                                <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:11px;letter-spacing:0.2px" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </td>
-                                            <td style="padding:0px 20px 0px 0px;vertical-align:top;width:63px">
-                                                <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:11px;letter-spacing:0.2px" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </td>
-                                            <td style="padding:0px;vertical-align:top">
-                                                <a href="https://www.instagram.com/stackedfarm/" style="color:rgb(77,77,77);font-size:11px;letter-spacing:0.2px" target="_blank">Instagram</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
+                                <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
+                                    Links: <a href="https://stackedfarm.com/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">LinkedIn</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.instagram.com/stackedfarm/" style="color:rgb(0,0,0);font-size:11px;" target="_blank">Instagram</a>
+                                </p>
                             </td>
                         </tr>
                     </tbody>
