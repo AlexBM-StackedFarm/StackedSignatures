@@ -1,0 +1,16 @@
+[build]
+command = "npm run build"
+output_directory = "dist"
+environment = { NODE_VERSION = "18" }
+
+[functions]
+directory = ".cloudflare/workers"
+
+[site]
+bucket = "./dist"
+
+[env.production]
+  DEBUG = "false"
+
+[env.preview]
+  DEBUG = "true"
