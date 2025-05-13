@@ -48,6 +48,5 @@ logs/
 ehthumbs.db
 Thumbs.db
 
-# Cloudflare Pages
-.cloudflare/
+# Node.js
 node_modules/

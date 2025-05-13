@@ -5,19 +5,19 @@ async function handleRequest(request, env) {
   const path = url.pathname;
 
   // Handle specific API routes
-  if (path.startsWith('/functions/generate') && request.method === 'POST') {
+  if (path.includes('/generate') && request.method === 'POST') {
     return handleGenerateRequest(request);
   }
 
   // Default response for functions route
-  if (path.startsWith('/functions/')) {
+  if (path.includes('/functions/')) {
     return new Response("Stacked Farm Email Signature Generator API", {
       headers: { "content-type": "text/plain" }
     });
   }
 
-  // For any other route, pass to the Pages asset
-  return new Response("Not found", { status: 404 });
+  // For any other route, pass to the Pages asset - let Pages handle static content
+  return env.ASSETS.fetch(request);
 }
 
 async function handleGenerateRequest(request) {
