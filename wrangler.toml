@@ -1,12 +1,19 @@
 name = "stackedsignatures"
-main = "./.cloudflare/workers/script.js"
+type = "webpack"
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
 compatibility_date = "2025-05-13"
 
 [site]
 bucket = "./dist"
+entry-point = "workers-site"
 
 [build]
 command = "./build.sh"
+upload.format = "service-worker"
 
-[triggers]
-crons = []
+[dev]
+port = 8787
+local_protocol = "http"

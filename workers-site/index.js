@@ -1,48 +1,67 @@
-// This file serves as the main entry point for all functions
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 
-async function handleRequest(request, env) {
-  const url = new URL(request.url);
-  const path = url.pathname;
+/**
+ * The DEBUG flag will do two things that help during development:
+ * 1. we will skip caching on the edge, which makes it easier to debug
+ * 2. we will return more detailed error messages to the client
+ */
+const DEBUG = false
 
-  // Handle specific API routes
-  if (path.includes('/generate') && request.method === 'POST') {
-    return handleGenerateRequest(request);
-  }
-
-  // Default response for functions route
-  if (path.includes('/functions/')) {
-    return new Response("Stacked Farm Email Signature Generator API", {
-      headers: { "content-type": "text/plain" }
-    });
-  }
-
-  // For any other route, pass to the Pages asset - let Pages handle static content
+/**
+ * Handle incoming requests
+ */
+async function handleRequest(event) {
   try {
-    if (env.ASSETS) {
-      return env.ASSETS.fetch(request);
-    } else {
-      // Fallback for when ASSETS binding is not available
+    // Get URL and path
+    const url = new URL(event.request.url)
+    const path = url.pathname
+
+    // Handle API routes
+    if (path.includes('/generate') && event.request.method === 'POST') {
+      return handleGenerateRequest(event.request)
+    }
+
+    // Serve static assets for any other route
+    let options = {}
+    if (DEBUG) {
+      options.cacheControl = {
+        bypassCache: true,
+      }
+    }
+
+    try {
+      // Try to get the asset from KV
+      const page = await getAssetFromKV(event, options)
+      const response = new Response(page.body, page)
+      response.headers.set('X-XSS-Protection', '1; mode=block')
+      response.headers.set('X-Content-Type-Options', 'nosniff')
+      response.headers.set('X-Frame-Options', 'DENY')
+      response.headers.set('Referrer-Policy', 'unsafe-url')
+      response.headers.set('Feature-Policy', 'none')
+      return response
+    } catch (e) {
+      // If asset isn't found in KV, return a simple fallback
       return new Response("Stacked Farm Email Signature Generator", {
-        headers: { "content-type": "text/html" }
-      });
+        status: 200,
+        headers: { "Content-Type": "text/html" }
+      })
     }
   } catch (e) {
-    console.error("Error fetching assets:", e);
-    return new Response("Something went wrong. Please try again later.", {
+    // Return a standard error response
+    return new Response("An error occurred: " + (DEBUG ? e.message : "Unknown error"), {
       status: 500,
-      headers: { "content-type": "text/plain" }
-    });
+    })
   }
 }
 
 async function handleGenerateRequest(request) {
-  const formData = await request.formData();
+  const formData = await request.formData()
   
-  const name = formData.get('name') || '';
-  const job_title = formData.get('job_title') || '';
-  const phone = formData.get('phone') || '';
-  const phone2 = formData.get('phone2') || '';
-  const password = formData.get('password') || '';
+  const name = formData.get('name') || ''
+  const job_title = formData.get('job_title') || ''
+  const phone = formData.get('phone') || ''
+  const phone2 = formData.get('phone2') || ''
+  const password = formData.get('password') || ''
   
   // Check password
   if (password !== 'Lettuce2025') {
@@ -57,11 +76,11 @@ async function handleGenerateRequest(request) {
           'Access-Control-Allow-Headers': 'Content-Type'
         }
       }
-    );
+    )
   }
   
   // Generate the signature HTML
-  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2);
+  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2)
   
   return new Response(
     JSON.stringify({ signature_html: signatureHtml }),
@@ -74,17 +93,17 @@ async function handleGenerateRequest(request) {
         'Access-Control-Allow-Headers': 'Content-Type'
       }
     }
-  );
+  )
 }
 
 function generateSignatureHtml(name, job_title, phone, phone2) {
   const phoneFormatted = phone ? 
-    `<a href="tel:${phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : '';
+    `<a href="tel:${phone.replace(/\\s/g, '').replace(/-/g, '').replace(/\\(/g, '').replace(/\\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : ''
   
   const phone2Formatted = phone2 ? 
-    `<a href="tel:${phone2.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : '';
+    `<a href="tel:${phone2.replace(/\\s/g, '').replace(/-/g, '').replace(/\\(/g, '').replace(/\\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : ''
   
-  const separator = phone && phone2 ? '&nbsp;&nbsp;|&nbsp;&nbsp;' : '';
+  const separator = phone && phone2 ? '&nbsp;&nbsp;|&nbsp;&nbsp;' : ''
   
   const phoneHtml = (phone || phone2) ? 
     `<tr>
@@ -93,7 +112,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
           ${phoneFormatted}${separator}${phone2Formatted}
         </p>
       </td>
-    </tr>` : '';
+    </tr>` : ''
   
   return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
     <tbody>
@@ -150,12 +169,9 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
             </td>
         </tr>
     </tbody>
-</table>`;
+</table>`
 }
 
-// Export for Cloudflare Workers
-export default {
-  async fetch(request, env, ctx) {
-    return handleRequest(request, env);
-  }
-};
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event))
+})
