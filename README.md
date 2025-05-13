@@ -81,16 +81,18 @@ docker-compose up -d
 
 To deploy to Cloudflare Pages:
 
-1. Push this repository to GitHub at: `github.com/StackedFarm/StackedSignatures`
+1. Push this repository to GitHub at: `github.com/AlexBM-StackedFarm/StackedSignatures`
 2. Log in to your Cloudflare dashboard
 3. Go to Pages > Create a project > Connect to Git
-4. Select the repository: `StackedFarm/StackedSignatures`
+4. Select the repository: `AlexBM-StackedFarm/StackedSignatures`
 5. Set up your build settings:
    - Framework preset: None
    - Build command: `./build.sh`
    - Build output directory: `dist`
    - Environment variables: Add if needed
 6. Deploy!
+
+NOTE: The app uses Cloudflare Functions (in the `/functions` directory) to handle server-side logic like password verification.
 
 ## Customization
 
