@@ -97,11 +97,11 @@ async function handleGenerateRequest(request) {
 }
 
 function generateSignatureHtml(name, job_title, phone, phone2) {
-  const phoneFormatted = phone ? 
-    `<a href="tel:${phone.replace(/\\s/g, '').replace(/-/g, '').replace(/\\(/g, '').replace(/\\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : ''
-  
-  const phone2Formatted = phone2 ? 
-    `<a href="tel:${phone2.replace(/\\s/g, '').replace(/-/g, '').replace(/\\(/g, '').replace(/\\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : ''
+  const phoneFormatted = phone ?
+    `<a href="tel:${phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : ''
+
+  const phone2Formatted = phone2 ?
+    `<a href="tel:${phone2.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : ''
   
   const separator = phone && phone2 ? '&nbsp;&nbsp;|&nbsp;&nbsp;' : ''
   
