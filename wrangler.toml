@@ -1,4 +1,4 @@
-name = "stacked-signatures"
+name = "stackedsignatures"
 main = "./.cloudflare/workers/script.js"
 compatibility_date = "2025-05-13"
 
