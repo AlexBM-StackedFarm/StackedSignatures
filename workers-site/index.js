@@ -91,12 +91,12 @@ function generateHtmlPage() {
   <title>Stacked Farm Email Signature Generator</title>
   <style>
     :root {
-      --primary-color: #4CAF50;
+      --primary-color: #324F35;
       --secondary-color: #333;
       --background-color: #f8f8f8;
       --border-color: #ddd;
       --text-color: #333;
-      --success-color: #4CAF50;
+      --success-color: #324F35;
       --error-color: #f44336;
     }
 
