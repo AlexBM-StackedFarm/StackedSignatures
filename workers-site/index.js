@@ -295,7 +295,7 @@ function generateHtmlPage() {
         </div>
 
         <div class="form-group">
-          <label for="password">Password <span class="required">*</span></label>
+          <label for="password">Password (Enter password to generate email signature)<span class="required">*</span></label>
           <input type="password" id="password" name="password" required>
           <p id="passwordError" class="error-message hidden">Incorrect password. Please try again.</p>
         </div>
