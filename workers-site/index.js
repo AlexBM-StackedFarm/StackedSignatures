@@ -414,24 +414,27 @@ function generateHtmlPage() {
 
 function generateSignatureHtml(name, job_title, phone, phone2) {
   const phoneFormatted = phone ?
-    `<a href="tel:${phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : ''
+    `<a href="tel:${phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : '&nbsp;'
 
   const phone2Formatted = phone2 ?
-    `<a href="tel:${phone2.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : ''
+    `<a href="tel:${phone2.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : '&nbsp;'
   
-  const separator = phone && phone2 ? '&nbsp;&nbsp;|&nbsp;&nbsp;' : ''
-  
-  // Instead of conditionally including the entire phone section,
-  // always include the structure but conditionally include the content
-  const phoneContent = (phone || phone2) ? 
-    `${phoneFormatted}${separator}${phone2Formatted}` : 
-    '&nbsp;' // Empty space to maintain height when no phone numbers
-  
+  // Always include the phone section for consistent spacing
   const phoneHtml = `<tr>
     <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
-      <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
-        ${phoneContent}
-      </p>
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:100%">
+        <tr>
+          <td style="width:110px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
+            ${phoneFormatted}
+          </td>
+          <td style="width:20px;padding:0px;vertical-align:top;text-align:center;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
+            ${phone && phone2 ? '|' : ''}
+          </td>
+          <td style="padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
+            ${phone2Formatted}
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>`
   
@@ -471,10 +474,10 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                                 <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
                                     <tbody>
                                         <tr>
-                                            <td style="padding:0px 31px 0px 0px;vertical-align:top;width:101px">
+                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:101px">
                                                 <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
-                                            <td style="padding:0px 31px 0px 0px;vertical-align:top;width:61px">
+                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:61px">
                                                 <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                             <td style="padding:0px;vertical-align:top">
