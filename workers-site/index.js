@@ -421,14 +421,19 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   
   const separator = phone && phone2 ? '&nbsp;&nbsp;|&nbsp;&nbsp;' : ''
   
-  const phoneHtml = (phone || phone2) ? 
-    `<tr>
-      <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
-        <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
-          ${phoneFormatted}${separator}${phone2Formatted}
-        </p>
-      </td>
-    </tr>` : ''
+  // Instead of conditionally including the entire phone section,
+  // always include the structure but conditionally include the content
+  const phoneContent = (phone || phone2) ? 
+    `${phoneFormatted}${separator}${phone2Formatted}` : 
+    '&nbsp;' // Empty space to maintain height when no phone numbers
+  
+  const phoneHtml = `<tr>
+    <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
+      <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
+        ${phoneContent}
+      </p>
+    </td>
+  </tr>`
   
   return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
     <tbody>
