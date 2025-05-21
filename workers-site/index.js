@@ -462,7 +462,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                         </tr>
                         ${phoneHtml}
                         <tr>
-                            <td valign="top" style="padding:0px 0px 10px;vertical-align:top">
+                            <td valign="top" style="padding:0px 0px 5px;vertical-align:top">
                                 <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
                                     <tbody>
                                         <tr>
