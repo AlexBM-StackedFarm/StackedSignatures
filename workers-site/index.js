@@ -471,10 +471,10 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                                 <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
                                     <tbody>
                                         <tr>
-                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:101px">
+                                            <td style="padding:0px 31px 0px 0px;vertical-align:top;width:101px">
                                                 <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
-                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:61px">
+                                            <td style="padding:0px 31px 0px 0px;vertical-align:top;width:61px">
                                                 <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                             <td style="padding:0px;vertical-align:top">
