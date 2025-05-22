@@ -421,7 +421,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   
   // Always include the phone section for consistent spacing
   const phoneHtml = `<tr>
-    <td valign="top" style="padding:0px 0px 7px;vertical-align:top">
+    <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:100%">
         <tr>
           <td style="width:110px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
@@ -438,7 +438,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
     </td>
   </tr>`
   
-  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:380px;max-width:380px">
+  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
     <tbody>
         <tr>
             <td colspan="1" style="padding:0px;vertical-align:top;width:109px;max-width:109px">
