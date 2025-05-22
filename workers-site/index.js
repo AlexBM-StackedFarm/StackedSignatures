@@ -424,7 +424,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
     <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:100%">
         <tr>
-          <td style="width:98px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
+          <td style="width:95px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
             ${phoneFormatted}
           </td>
           <td style="width:20px;padding:0px;vertical-align:top;text-align:center;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
@@ -474,10 +474,10 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                                 <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
                                     <tbody>
                                         <tr>
-                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:101px">
+                                            <td style="padding:0px 36px 0px 0px;vertical-align:top;width:101px">
                                                 <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
-                                            <td style="padding:0px 32px 0px 0px;vertical-align:top;width:61px">
+                                            <td style="padding:0px 36px 0px 0px;vertical-align:top;width:61px">
                                                 <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </td>
                                             <td style="padding:0px;vertical-align:top">
