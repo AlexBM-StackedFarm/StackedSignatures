@@ -430,7 +430,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
           <td style="width:20px;padding:0px;vertical-align:top;text-align:center;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
             ${phone && phone2 ? '|' : ''}
           </td>
-          <td style="padding:0px 4px 0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
+          <td style="padding:0px 6px 0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;">
             ${phone2Formatted}
           </td>
         </tr>
