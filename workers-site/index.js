@@ -438,7 +438,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
     </td>
   </tr>`
   
-  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
+  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:380px;max-width:380px">
     <tbody>
         <tr>
             <td colspan="1" style="padding:0px;vertical-align:top;width:109px;max-width:109px">
