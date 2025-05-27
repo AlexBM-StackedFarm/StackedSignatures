@@ -492,7 +492,7 @@ function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, 
   </div>`
   
   // Build the social media section with customizable gaps
-  const socialMediaHtml = `<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
+  const socialMediaHtml = `<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:290px">
     <tbody>
         <tr>
             <td style="padding:0px ${websiteGap}px 0px 0px;vertical-align:top;width:85px">
