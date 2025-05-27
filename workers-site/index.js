@@ -422,15 +422,15 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   // Always include the phone section for consistent spacing
   const phoneHtml = `<tr>
     <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
-      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:100%;table-layout:fixed;">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:320px;max-width:320px;table-layout:fixed;">
         <tr>
-          <td style="width:110px;min-width:110px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
+          <td style="width:97px;min-width:97px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
             ${phoneFormatted}
           </td>
           <td style="width:20px;min-width:20px;padding:0px;vertical-align:top;text-align:center;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;">
             ${phone && phone2 ? '|' : ''}
           </td>
-          <td style="width:144px;min-width:144px;padding:0px 0px 0px 6px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
+          <td style="padding:0px 6px 0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
             ${phone2Formatted}
           </td>
         </tr>
