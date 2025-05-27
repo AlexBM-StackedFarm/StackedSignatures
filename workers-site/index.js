@@ -495,7 +495,7 @@ function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, 
   const socialMediaHtml = `<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
     <tbody>
         <tr>
-            <td style="padding:0px ${websiteGap}px 0px 0px;vertical-align:top;width:80px">
+            <td style="padding:0px ${websiteGap}px 0px 0px;vertical-align:top;width:85px">
                 <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;
             </td>
             <td style="padding:0px ${linkedinGap}px 0px 0px;vertical-align:top;width:61px">
