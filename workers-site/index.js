@@ -452,7 +452,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   const phoneHtml = `<tr>
     <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
       <div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
-        <span style="display:inline-block;min-width:88px;">${phoneFormatted}</span><span style="display:inline-block;width:40px;text-align:center;">${phone && phone2 ? '|' : ''}</span><span style="display:inline-block;">${phone2Formatted}</span>
+        <span style="display:inline-block;min-width:90px;">${phoneFormatted}</span><span style="display:inline-block;width:40px;text-align:center;">${phone && phone2 ? '|' : ''}</span><span style="display:inline-block;">${phone2Formatted}</span>
       </div>
     </td>
   </tr>`
