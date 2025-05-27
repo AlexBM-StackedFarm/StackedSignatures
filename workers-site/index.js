@@ -483,7 +483,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                         <tr>
                             <td valign="top" style="padding:0px 0px 5px;vertical-align:top">
                                 <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
-                                    Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a>
+                                    Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a>
                                 </p>
                             </td>
                         </tr>
