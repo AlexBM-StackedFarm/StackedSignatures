@@ -50,6 +50,8 @@ async function handleGenerateRequest(request) {
   const password = formData.get('password') || ''
   const officesGap = parseInt(formData.get('officesGap')) || 18
   const usaGap = parseInt(formData.get('usaGap')) || 8
+  const websiteGap = parseInt(formData.get('websiteGap')) || 43
+  const linkedinGap = parseInt(formData.get('linkedinGap')) || 43
   
   // Check password
   if (password !== 'Lettuce2025') {
@@ -68,7 +70,7 @@ async function handleGenerateRequest(request) {
   }
   
   // Generate the signature HTML with custom gaps
-  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2, officesGap, usaGap)
+  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2, officesGap, usaGap, websiteGap, linkedinGap)
   
   return new Response(
     JSON.stringify({ signature_html: signatureHtml }),
@@ -307,6 +309,16 @@ function generateHtmlPage() {
           <label for="usaGap">Gap after "|" separator (pixels)</label>
           <input type="number" id="usaGap" name="usaGap" value="8" min="0" max="50" placeholder="8">
         </div>
+
+        <div class="form-group">
+          <label for="websiteGap">Gap after "stackedfarm.com" (pixels)</label>
+          <input type="number" id="websiteGap" name="websiteGap" value="43" min="0" max="80" placeholder="43">
+        </div>
+
+        <div class="form-group">
+          <label for="linkedinGap">Gap after "LinkedIn" (pixels)</label>
+          <input type="number" id="linkedinGap" name="linkedinGap" value="43" min="0" max="80" placeholder="43">
+        </div>
 	<div>
 	</div>
 	<br><br><br>
@@ -452,9 +464,9 @@ function formatPhoneNumber(phone) {
   }
 }
 
-function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, usaGap = 8) {
+function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, usaGap = 8, websiteGap = 43, linkedinGap = 43) {
   // Debug: Log the gap values to console
-  console.log('Offices Gap:', officesGap, 'USA Gap:', usaGap);
+  console.log('Offices Gap:', officesGap, 'USA Gap:', usaGap, 'Website Gap:', websiteGap, 'LinkedIn Gap:', linkedinGap);
   
   const formattedPhone = formatPhoneNumber(phone);
   const formattedPhone2 = formatPhoneNumber(phone2);
@@ -478,6 +490,23 @@ function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, 
   const officesHtml = `<div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
     <span style="display:inline-block;">Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a></span><span style="display:inline-block;padding:0px ${officesGap}px;">|</span><span style="display:inline-block;padding-left:${usaGap}px;"><a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a></span>
   </div>`
+  
+  // Build the social media section with customizable gaps
+  const socialMediaHtml = `<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
+    <tbody>
+        <tr>
+            <td style="padding:0px ${websiteGap}px 0px 0px;vertical-align:top;width:80px">
+                <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;
+            </td>
+            <td style="padding:0px ${linkedinGap}px 0px 0px;vertical-align:top;width:61px">
+                <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;
+            </td>
+            <td style="padding:0px;vertical-align:top">
+                <a href="https://www.instagram.com/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">Instagram</a>&nbsp;
+            </td>
+        </tr>
+    </tbody>
+</table>`
   
   return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
     <tbody>
@@ -510,21 +539,7 @@ function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, 
                         ${phoneHtml}
                         <tr>
                             <td valign="top" style="padding:0px 0px 5px;vertical-align:top">
-                                <table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,0);font-size:8px;background:none;border-collapse:collapse;border-spacing:0px;border:0px;margin:0px;padding:0px;width:274px;max-width:288px">
-                                    <tbody>
-                                        <tr>
-                                            <td style="padding:0px 43px 0px 0px;vertical-align:top;width:80px">
-                                                <a href="https://stackedfarm.com/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">stackedfarm.com</a>&nbsp;
-                                            </td>
-                                            <td style="padding:0px 43px 0px 0px;vertical-align:top;width:61px">
-                                                <a href="https://www.linkedin.com/company/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">LinkedIn</a>&nbsp;
-                                            </td>
-                                            <td style="padding:0px;vertical-align:top">
-                                                <a href="https://www.instagram.com/stackedfarm/" style="color:rgb(77,77,77);font-size:10px;letter-spacing:0.2px;padding-top:3px;display:inline-block;" target="_blank">Instagram</a>&nbsp;
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                ${socialMediaHtml}
                             </td>
                         </tr>
                     </tbody>
