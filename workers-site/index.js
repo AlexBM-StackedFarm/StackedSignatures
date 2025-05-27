@@ -48,6 +48,8 @@ async function handleGenerateRequest(request) {
   const phone = formData.get('phone') || ''
   const phone2 = formData.get('phone2') || ''
   const password = formData.get('password') || ''
+  const officesGap = parseInt(formData.get('officesGap')) || 18
+  const usaGap = parseInt(formData.get('usaGap')) || 8
   
   // Check password
   if (password !== 'Lettuce2025') {
@@ -65,8 +67,8 @@ async function handleGenerateRequest(request) {
     )
   }
   
-  // Generate the signature HTML
-  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2)
+  // Generate the signature HTML with custom gaps
+  const signatureHtml = generateSignatureHtml(name, job_title, phone, phone2, officesGap, usaGap)
   
   return new Response(
     JSON.stringify({ signature_html: signatureHtml }),
@@ -155,7 +157,8 @@ function generateHtmlPage() {
 
     input[type="text"],
     input[type="email"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="number"] {
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
@@ -166,7 +169,8 @@ function generateHtmlPage() {
 
     input[type="text"]:focus,
     input[type="email"]:focus,
-    input[type="password"]:focus {
+    input[type="password"]:focus,
+    input[type="number"]:focus {
       outline: none;
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
@@ -292,6 +296,16 @@ function generateHtmlPage() {
         <div class="form-group">
           <label for="phone2">Secondary Phone Number</label>
           <input type="text" id="phone2" name="phone2" placeholder="Optional">
+        </div>
+
+        <div class="form-group">
+          <label for="officesGap">Gap before "|" separator (pixels)</label>
+          <input type="number" id="officesGap" name="officesGap" value="18" min="0" max="50" placeholder="18">
+        </div>
+
+        <div class="form-group">
+          <label for="usaGap">Gap after "|" separator (pixels)</label>
+          <input type="number" id="usaGap" name="usaGap" value="8" min="0" max="50" placeholder="8">
         </div>
 	<div>
 	</div>
@@ -438,11 +452,7 @@ function formatPhoneNumber(phone) {
   }
 }
 
-function generateSignatureHtml(name, job_title, phone, phone2) {
-  // Customizable gap settings (in pixels)
-  const officesGap = 18; // Gap between "Offices: Australia" and "|"
-  const usaGap = 8;     // Gap between "|" and "USA"
-  
+function generateSignatureHtml(name, job_title, phone, phone2, officesGap = 18, usaGap = 8) {
   // Debug: Log the gap values to console
   console.log('Offices Gap:', officesGap, 'USA Gap:', usaGap);
   
