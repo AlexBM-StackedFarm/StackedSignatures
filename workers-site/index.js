@@ -514,6 +514,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
     </tbody>
 </table>`
 }
+
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event))
 })
