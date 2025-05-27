@@ -412,29 +412,48 @@ function generateHtmlPage() {
 </html>`;
 }
 
-function generateSignatureHtml(name, job_title, phone, phone2) {
-  const phoneFormatted = phone ?
-    `<a href="tel:${phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone}</a>` : '&nbsp;'
-
-  const phone2Formatted = phone2 ?
-    `<a href="tel:${phone2.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '')}" style="color:rgb(0,0,0)" target="_blank">${phone2}</a>` : '&nbsp;'
+function formatPhoneNumber(phone) {
+  if (!phone) return '';
   
-  // Always include the phone section for consistent spacing
+  // Remove all non-numeric characters
+  const cleanPhone = phone.replace(/\D/g, '');
+  
+  // Handle different phone number lengths
+  if (cleanPhone.length === 10) {
+    // US format: (XXX) XXX-XXXX
+    return `(${cleanPhone.slice(0, 3)}) ${cleanPhone.slice(3, 6)}-${cleanPhone.slice(6)}`;
+  } else if (cleanPhone.length === 11 && cleanPhone.startsWith('1')) {
+    // US with country code: (XXX) XXX-XXXX
+    return `(${cleanPhone.slice(1, 4)}) ${cleanPhone.slice(4, 7)}-${cleanPhone.slice(7)}`;
+  } else if (cleanPhone.length > 10) {
+    // International format: +XX XXX XXX XXXX
+    const countryCode = cleanPhone.slice(0, -10);
+    const areaCode = cleanPhone.slice(-10, -7);
+    const firstPart = cleanPhone.slice(-7, -4);
+    const lastPart = cleanPhone.slice(-4);
+    return `+${countryCode} ${areaCode} ${firstPart} ${lastPart}`;
+  } else {
+    // Fallback for unusual lengths - just return cleaned with basic formatting
+    return cleanPhone.replace(/(\d{3})(\d{3})(\d+)/, '($1) $2-$3');
+  }
+}
+
+function generateSignatureHtml(name, job_title, phone, phone2) {
+  const formattedPhone = formatPhoneNumber(phone);
+  const formattedPhone2 = formatPhoneNumber(phone2);
+  
+  const phoneFormatted = formattedPhone ?
+    `<a href="tel:${phone.replace(/\D/g, '')}" style="color:rgb(0,0,0)" target="_blank">${formattedPhone}</a>` : '&nbsp;'
+
+  const phone2Formatted = formattedPhone2 ?
+    `<a href="tel:${phone2.replace(/\D/g, '')}" style="color:rgb(0,0,0)" target="_blank">${formattedPhone2}</a>` : '&nbsp;'
+  
+  // Use inline-block approach to prevent mobile Gmail wrapping issues
   const phoneHtml = `<tr>
     <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
-      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;background:none;border:0px;margin:0px;padding:0px;width:320px;max-width:320px;table-layout:fixed;">
-        <tr>
-          <td style="width:97px;min-width:97px;padding:0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
-            ${phoneFormatted}
-          </td>
-          <td style="width:20px;min-width:20px;padding:0px;vertical-align:top;text-align:center;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;">
-            ${phone && phone2 ? '|' : ''}
-          </td>
-          <td style="padding:0px 6px 0px;vertical-align:top;color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;">
-            ${phone2Formatted}
-          </td>
-        </tr>
-      </table>
+      <div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
+        <span style="display:inline-block;min-width:120px;">${phoneFormatted}</span><span style="display:inline-block;width:40px;text-align:center;">${phone && phone2 ? '|' : ''}</span><span style="display:inline-block;">${phone2Formatted}</span>
+      </div>
     </td>
   </tr>`
   
