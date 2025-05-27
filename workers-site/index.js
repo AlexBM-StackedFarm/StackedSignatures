@@ -443,6 +443,9 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   const officesGap = 18; // Gap between "Offices: Australia" and "|"
   const usaGap = 8;     // Gap between "|" and "USA"
   
+  // Debug: Log the gap values to console
+  console.log('Offices Gap:', officesGap, 'USA Gap:', usaGap);
+  
   const formattedPhone = formatPhoneNumber(phone);
   const formattedPhone2 = formatPhoneNumber(phone2);
   
@@ -460,6 +463,11 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
       </div>
     </td>
   </tr>`
+  
+  // Build the offices section with proper variable interpolation
+  const officesHtml = `<div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
+    <span style="display:inline-block;">Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a></span><span style="display:inline-block;padding:0px ${officesGap}px;">|</span><span style="display:inline-block;padding-left:${usaGap}px;"><a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a></span>
+  </div>`
   
   return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0px;color:rgb(74,74,74);font-family:BlinkMacSystemFont,-apple-system,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;background:none;border:0px;margin:0px;padding:0px;width:410px;max-width:410px">
     <tbody>
@@ -486,9 +494,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                         </tr>
                         <tr>
                             <td valign="top" style="padding:0px 0px 5px;vertical-align:top;width:274px;max-width:274px;">
-                                <div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
-                                    <span style="display:inline-block;">Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a></span><span style="display:inline-block;padding:0px ${officesGap}px;">|</span><span style="display:inline-block;padding-left:${usaGap}px;"><a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a></span>
-                                </div>
+                                ${officesHtml}
                             </td>
                         </tr>
                         ${phoneHtml}
