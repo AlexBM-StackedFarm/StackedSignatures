@@ -439,6 +439,10 @@ function formatPhoneNumber(phone) {
 }
 
 function generateSignatureHtml(name, job_title, phone, phone2) {
+  // Customizable gap settings (in pixels)
+  const officesGap = 16; // Gap between "Offices: Australia" and "|"
+  const usaGap = 16;     // Gap between "|" and "USA"
+  
   const formattedPhone = formatPhoneNumber(phone);
   const formattedPhone2 = formatPhoneNumber(phone2);
   
@@ -452,7 +456,7 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
   const phoneHtml = `<tr>
     <td valign="top" style="padding:0px 0px 3px;vertical-align:top">
       <div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
-        <span style="display:inline-block;min-width:120px;">${phoneFormatted}</span><span style="display:inline-block;width:40px;text-align:center;">${phone && phone2 ? '|' : ''}</span><span style="display:inline-block;">${phone2Formatted}</span>
+        <span style="display:inline-block;min-width:94px;">${phoneFormatted}</span><span style="display:inline-block;width:40px;text-align:center;">${phone && phone2 ? '|' : ''}</span><span style="display:inline-block;">${phone2Formatted}</span>
       </div>
     </td>
   </tr>`
@@ -481,10 +485,10 @@ function generateSignatureHtml(name, job_title, phone, phone2) {
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top" style="padding:0px 0px 5px;vertical-align:top">
-                                <p style="padding:0px;vertical-align:top;color:rgb(0,0,0);line-height:normal;font-size:12px;letter-spacing:0.2px;margin:0px!important">
-                                    Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a>
-                                </p>
+                            <td valign="top" style="padding:0px 0px 5px;vertical-align:top;width:274px;max-width:274px;">
+                                <div style="color:rgb(0,0,0);font-size:12px;letter-spacing:0.2px;white-space:nowrap;line-height:normal;margin:0px;padding:0px;">
+                                    <span style="display:inline-block;">Offices: <a href="https://maps.app.goo.gl/1X7Fk11UJCHmtrqE7" style="color:rgb(0,0,0)" target="_blank">Australia</a></span><span style="display:inline-block;padding:0px ${officesGap}px;">|</span><span style="display:inline-block;padding-left:${usaGap}px;"><a href="https://www.google.com/maps/place/223+S+Beverly+Dr,+Beverly+Hills,+CA+90212,+USA/@34.0642184,-118.3993565,1627m/data=!3m2!1e3!4b1!4m6!3m5!1s0x80c2bbfbf078a93f:0x61e9574a012d1ec7!8m2!3d34.0642184!4d-118.3993565!16s%2Fg%2F11k3r4mq1s!5m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" style="color:rgb(0,0,0)" target="_blank">USA</a></span>
+                                </div>
                             </td>
                         </tr>
                         ${phoneHtml}
