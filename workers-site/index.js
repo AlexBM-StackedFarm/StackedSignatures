@@ -441,7 +441,7 @@ function formatPhoneNumber(phone) {
 function generateSignatureHtml(name, job_title, phone, phone2) {
   // Customizable gap settings (in pixels)
   const officesGap = 18; // Gap between "Offices: Australia" and "|"
-  const usaGap = 10;     // Gap between "|" and "USA"
+  const usaGap = 8;     // Gap between "|" and "USA"
   
   const formattedPhone = formatPhoneNumber(phone);
   const formattedPhone2 = formatPhoneNumber(phone2);
